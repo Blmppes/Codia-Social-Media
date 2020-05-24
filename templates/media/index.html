@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Codia</title>
+
+        <!-- Bootstrap css CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Page css -->
+        <link rel="stylesheet" href="../../static/media/style.css">
+
+    </head>
+    <body>
+        <div id="page" class="container row">
+            <nav id="sidebar" style="height:625px;" class="col-3 border-right">
+                <div class="sidebar-header">
+                    <h3 class="text-primary">Get involve in!</h3>
+                </div>
+
+                <ul class="list-unstyled components" id="sections">
+                    <li class="active">
+                        <button class="btn btn-light rounded"><a href="#">Home</a></button>
+                    </li>
+                    <li>
+                        <button class="btn btn-light rounded" data-toggle="modal" data-target="#postModal" style="text-decoration: none;
+                            font-size: larger;
+                            color: black;
+                            font-weight: 600;">New +++
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-light rounded">
+                          <a href="../message/index.html">
+                              Message
+                          </a>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="btn btn-light rounded"><a href="#">Bookmark</a></button>
+                    </li>
+                    <li>
+                        <button class="btn btn-light rounded"><a href="#">Profile</a></button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div id="media" class="container col-8">
+                <ul class="list-unstyled components" id="post-group" style="height: 605px; overflow-y: auto;">
+                </ul>
+            </div>
+
+
+            <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="postModalLabel">Create new post!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="post-form">
+                            <div class="form-group">
+                              <label for="postTitle">Title:</label>
+                              <input type="text" class="form-control" id="postTitle" placeholder="Enter title:">
+                              <label for="postText">Content:</label>
+                              <textarea rows="5" class="form-control" id="postText">Hi everybody!</textarea>
+                              <label for="postImage">Image:</label>
+                              <input type="file" class="form-control" id="postImage" accept=".jpg, .jpeg, .png">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="padding: 5px;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="post-close-btn">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="post-btn" onclick="sendNewPost()">Post</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <!-- Bootstrap js  -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Page js -->
+    <script src="../../static/media/app.js"></script>
+    <script src="../../static/media/testapi.js"></script>
+</html>
