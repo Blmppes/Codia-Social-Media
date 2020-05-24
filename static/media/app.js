@@ -1,9 +1,3 @@
-const postGroup = document.getElementById("post-group");
-const sendBtn = document.getElementById("post-btn");
-const postTitle = document.getElementById("postTitle");
-const postText = document.getElementById("postText");
-const postImage = document.getElementById("postImage");
-
 const postTemplate = (posttitle, postcontent, postimage) => {
     console.log(postimage)
     return `
@@ -18,8 +12,28 @@ const postTemplate = (posttitle, postcontent, postimage) => {
 }
 
 const sendNewPost = () => {
-    // updateToFirestore();
     
-    postGroup.innerHTML += postTemplate(postTitle.value, postText.value, URL.createObjectURL(postImage.files[0]));
+    let file = postImage.files[0];
+
+    let storageRef = firebase.storage().ref('pictures/' + file.name);
+
+    let task = storageRef.put(file);
+
+    task.on('state_changed',
+        function progress(snapshot){},
+
+        function error(err){
+            console.log(err);
+        },
+
+        function complete(){
+            console.log("completed")
+        }
+    )
+    
+    setTimeout(() => {
+        updateToFirestore(postTitle.value, postText.value, file.name);
+    }, 2000)
+    
 };
 
