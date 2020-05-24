@@ -8,7 +8,7 @@ auth.onAuthStateChanged(user => {
 })
 
 gLoginBtn.addEventListener("click", (e) => {
-    firebase.auth().signInWithRedirect(g_provider).then(function(result) {
+    firebase.auth().signInWithPopup(g_provider).then(function(result) {
         return db.collection("users").doc(result.user.uid).set({
             username: result.user.displayName
         })
@@ -22,7 +22,7 @@ gLoginBtn.addEventListener("click", (e) => {
 })
 
 fbLoginBtn.addEventListener("click", (e) => {
-    firebase.auth().signInWithRedirect(fb_provider).then(function(result) {
+    firebase.auth().signInWithPopup(fb_provider).then(function(result) {
 
     });
 })
