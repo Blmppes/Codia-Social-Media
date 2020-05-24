@@ -1,7 +1,7 @@
 const postTemplate = (posttitle, postcontent, postimage) => {
     console.log(postimage)
     return `
-    <div class="card" style="width: 100%;height: 500px;margin:20px 0px 100px 0px; border-radius:10px">
+    <div class="card posts">
         <div class="card-body">
             <h5 class="card-title">${posttitle}</h5>
             <p class="card-text">${postcontent}</p>
