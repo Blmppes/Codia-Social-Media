@@ -1,5 +1,5 @@
-const postTemplate = (posttitle, postcontent, postimage) => {
-    console.log(postimage)
+const postTemplate = (posttitle, postcontent, postimage, like, id) => {
+    let ide = String(id);
     return `
     <div class="card posts">
         <div class="card-body">
@@ -7,6 +7,7 @@ const postTemplate = (posttitle, postcontent, postimage) => {
             <p class="card-text">${postcontent}</p>
         </div>
         <img class="card-img-top" src="${postimage}" alt="Card image cap">
+        <button class="btn btn-primary like" onclick="updateToFirestore(${ide})"><span class="badge badge-secondary">${like}</span></h1>Like</button>
     </div>
     `
 }
@@ -32,7 +33,7 @@ const sendNewPost = () => {
     )
     
     setTimeout(() => {
-        updateToFirestore(postTitle.value, postText.value, file.name);
+        addToFirestore(postTitle.value, postText.value, file.name);
     }, 2000)
     
 };

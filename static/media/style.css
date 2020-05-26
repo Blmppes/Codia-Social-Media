@@ -21,3 +21,9 @@
     margin:20px 0px 150px 0px;
     border-radius:10px
 }
+
+.like{
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+}
