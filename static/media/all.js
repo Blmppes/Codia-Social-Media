@@ -60,7 +60,7 @@ const sendNewPost = () => {
     
     setTimeout(() => {
         addToFirestore(postTitle.value, postText.value, file.name);
-    }, 2000)
+    }, 5000)
     
 };
 
