@@ -1,14 +1,35 @@
 const postTemplate = (posttitle, postcontent, postimage, like, id) => {
-    return `
-    <div class="card posts">
-        <div class="card-body">
-            <h5 class="card-title">${posttitle}</h5>
-            <p class="card-text">${postcontent}</p>
-        </div>
-        <img class="card-img-top" src="${postimage}" alt="Card image cap">
-        <button class="btn btn-primary like" onclick="updateToFirestore('${id}')"><span class="badge badge-secondary" id="like-${id}">${like}</span></h1>Like</button>
-    </div>
-    `
+    let extension = postimage.split("?")[0];
+    extension = extension.substring(extension.length - 3, extension.length)
+    console.log(extension)
+    if (extension == "png" || extension == "jpg" || extension == "jpeg"){
+        return `
+            <div class="card posts">
+                <div class="card-body">
+                    <h5 class="card-title">${posttitle}</h5>
+                    <p class="card-text">${postcontent}</p>
+                </div>
+                <img class="card-img-top" src="${postimage}" alt="Card image cap">
+                <button class="btn btn-primary like" onclick="updateToFirestore('${id}')"><span class="badge badge-secondary" id="like-${id}">${like}</span></h1>Like</button>
+            </div>
+        `
+    }else if(extension == "mp4" || extension == "avi"){
+        return `
+            <div class="card posts">
+                <div class="card-body">
+                    <h5 class="card-title">${posttitle}</h5>
+                    <p class="card-text">${postcontent}</p>
+                </div>
+                <video width="100%" height="800" controls>
+                    <source src="${postimage}" type="video/mp4">
+                    <source src="${postimage}"" type="video/avi">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="btn btn-primary like" onclick="updateToFirestore('${id}')"><span class="badge badge-secondary" id="like-${id}">${like}</span></h1>Like</button>
+            </div>
+        `
+    }
+    
 }
 
 const updateLikeButton = (id, data) => {
@@ -75,11 +96,9 @@ const updateToFirestore = (docId) => {
 }
 
 db.collection('posts').onSnapshot(snapshot => {
-    console.log("changed")
     let changes = snapshot.docChanges();
     changes.forEach(change => {
         if(change.type == 'added'){
-            console.log(change.doc.data().image_url)
             var starsRef = firebase.storage().ref('pictures/'+ change.doc.data().image_url);
 
             starsRef.getDownloadURL().then(function(url) {
