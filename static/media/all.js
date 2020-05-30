@@ -9,8 +9,21 @@ const postTemplate = (posttitle, postcontent, postimage, like, id) => {
                     <h5 class="card-title">${posttitle}</h5>
                     <p class="card-text">${postcontent}</p>
                 </div>
-                <img class="card-img-top" src="${postimage}" alt="Card image cap">
-                <button class="btn btn-primary like" onclick="updateToFirestore('${id}')"><span class="badge badge-secondary" id="like-${id}">${like}</span></h1>Like</button>
+                <img class="card-img-top" src="${postimage}" alt="Card image cap" width="100%" height="700">
+                <div id="interact-btns">
+                    <button class="btn btn-primary like" onclick="updateToFirestore('${id}')"><span class="badge badge-secondary" id="like-${id}">${like}</span>Like</button>
+                    <button class="btn btn-grey comments" onclick="switchComments('${id}')"><span class="badge badge-secondary" id="comment-${id}">0</span>Comment</button>
+                </div>
+                <div id="comment-box-${id}" class="comments-box">
+                    <ul class="comment-list">
+                        <li><h1 id="123" class="comment"> This is cool ssssssssssssssssssssssssssssssssss!</h1></li>
+                        <li><h1 id="123" class="comment"> This is cool ssssssssssssssssssssssssssssssssss!</h1></li>
+                    </ul>
+                    <input type="text" id="comment-text-${id}" class="form-control" placeholder="Text...."/>
+                    <div class="input-group-append">
+                        <button class="btn btn-warning" id="send-button-${id}" onclick="updateToFireBase()" title="Click to send your message"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
             </div>
         `
     }else if(extension == "mp4" || extension == "avi"){
@@ -20,12 +33,26 @@ const postTemplate = (posttitle, postcontent, postimage, like, id) => {
                     <h5 class="card-title">${posttitle}</h5>
                     <p class="card-text">${postcontent}</p>
                 </div>
-                <video width="100%" height="800" controls>
+                <video width="100%" height="700" controls>
                     <source src="${postimage}" type="video/mp4">
                     <source src="${postimage}"" type="video/avi">
                     Your browser does not support the video tag.
                 </video>
-                <button class="btn btn-primary like" onclick="updateToFirestore('${id}')"><span class="badge badge-secondary" id="like-${id}">${like}</span></h1>Like</button>
+                <div id="interact-btns">
+                    <button class="btn btn-primary like" onclick="updateToFirestore('${id}', 'like')"><span class="badge badge-secondary" id="like-${id}">${like}</span>Like</button>
+                    <button class="btn btn-grey comments" onclick="switchComments('${id}')"><span class="badge badge-secondary" id="comment-${id}">0</span>Comment</button>
+                </div>
+                <div id="comment-box-${id}" class="comments-box">
+                    <ul class="comment-list" id="comment-list-${id}">
+    
+                    </ul>
+                    <div class="input-group">
+                        <input type="text" id="comment-text-${id}" class="form-control" placeholder="Text...."/>
+                        <div class="input-group-append">
+                            <button class="btn btn-warning" id="send-button-${id}" onclick="updateToFireBase('${id}', 'comment')" title="Click to send your message"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         `
     }
@@ -36,6 +63,14 @@ const updateLikeButton = (id, data) => {
     let currentLikeBtn = document.getElementById(`like-${id}`);
 
     currentLikeBtn.innerHTML = data;
+}
+
+const updateComment = (id, data) => {
+    let currentCommentList = document.getElementById(`comment-list-${id}`);
+
+    let html = `<li><h1 id="comment-${id}" class="comment">${data}</h1></li>`
+
+    currentCommentList.innerHTML = data;
 }
 
 const sendNewPost = () => {
@@ -60,9 +95,20 @@ const sendNewPost = () => {
     
     setTimeout(() => {
         addToFirestore(postTitle.value, postText.value, file.name);
-    }, 5000)
+    }, 4000)
     
 };
+
+const switchComments = (id) => {
+    
+    let commentBox = document.getElementById(`comment-box-${id}`)
+    console.log(commentBox.style.display)
+    if(commentBox.style.display == ""){
+        commentBox.style.display = "block"
+    }else if(commentBox.style.display == "block"){
+        commentBox.style.display = ""
+    }
+}
 
 
 
@@ -79,7 +125,8 @@ const addToFirestore = (title, text, imageURL) => {
         title: title,
         content: text,
         image_url: imageURL,
-        like: 0
+        like: 0,
+        comments: {}
     })
     .then(function(docRef) {
         console.log(this)
@@ -89,10 +136,19 @@ const addToFirestore = (title, text, imageURL) => {
     });
 }
 
-const updateToFirestore = (docId) => {
-    db.collection("posts").doc(docId).update({
-        like: firebase.firestore.FieldValue.increment(1)
-    })
+const updateToFirestore = (docId, type) => {
+    if(type == "like"){
+        db.collection("posts").doc(docId).update({
+            like: firebase.firestore.FieldValue.increment(1)
+        })
+    }else if(type == "comment"){
+        let val = document.getElementById(`comment-text-${docId}`).value;
+        let random = Math.floor(Math.random() * 10000000);
+        db.collection("posts").doc(docId).update({
+            "comments.random": val
+        });
+    }
+    
 }
 
 db.collection('posts').onSnapshot(snapshot => {
@@ -108,6 +164,7 @@ db.collection('posts').onSnapshot(snapshot => {
             });
         }else if(change.type == 'modified'){
             updateLikeButton(change.doc.id, change.doc.data().like);
+            updateComment(change.doc.id, change.doc.data().comments);
         }
         
     })

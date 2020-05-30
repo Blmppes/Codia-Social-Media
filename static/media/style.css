@@ -17,13 +17,40 @@
 
 .posts{
     width: 100%;
-    max-height: 800px;
-    margin:20px 0px 150px 0px;
-    border-radius:10px
+    height: fit-content;
+    margin:20px 0px 100px 0px;
+    border-radius: 10px;
+    display: block;
 }
 
 .like{
-    width: 100px;
+    width: 389.5px;
     justify-content: center;
     align-items: center;
+}
+
+.comments{
+    width: 389.6px;
+    justify-content: center;
+    align-items: center;
+}
+
+.comments-box{
+    padding: 20px;
+    width: 100%;
+    height: fit-content;
+    background-color: #f6faff;
+    display: none;
+}
+
+.comment{
+    width: 500px;
+    padding: 3px;
+    height: fit-content;
+    font-size: 20px;
+    word-wrap: break-word;
+    border-radius: 5px;
+    background-color: #008cff;
+    color: white;
+    display: block;
 }
