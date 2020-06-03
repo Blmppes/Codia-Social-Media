@@ -8,7 +8,7 @@ const postTemplate = (data, postimage, id) => {
                     <h5 class="card-title">${data.title}</h5>
                     <p class="card-text">${data.content}</p>
                 </div>
-                <img class="card-img-top" src="${postimage}" alt="Card image cap" width="100%" height="700">
+                <img class="card-img-top" src="${postimage}" alt="Card image cap" width="100%" height="100%">
                 <div id="interact-btns">
                     <button class="btn btn-primary like" onclick="updateToFirestore('${id}', 'like')"><span class="badge badge-secondary" id="like-${id}">${data.like}</span>Like</button>
                     <button class="btn btn-grey comments" onclick="switchComments('${id}')"><span class="badge badge-secondary" id="comment-${id}">0</span>Comment</button>
@@ -33,9 +33,9 @@ const postTemplate = (data, postimage, id) => {
                     <h5 class="card-title">${data.title}</h5>
                     <p class="card-text">${data.content}</p>
                 </div>
-                <video width="100%" height="700" controls>
+                <video width="100%" height="100%" controls>
                     <source src="${postimage}" type="video/mp4">
-                    <source src="${postimage}"" type="video/avi">
+                    <source src="${postimage}" type="video/avi">
                     Your browser does not support the video tag.
                 </video>
                 <div id="interact-btns">
